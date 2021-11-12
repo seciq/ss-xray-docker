@@ -14,20 +14,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Create release (release)      
-      uses: actions/create-release@latest
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: release
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-    - name: Create release (stable)
+    - name: Get current date
+      id: date
+      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+    - name: Create release
       uses: ncipollo/release-action@v1
       with:
-        name: Release ${{ github.ref }}
-        tag: stable
+        name: Release ${{ steps.date.outputs.date }}
+        tag: release
         draft: false
         prerelease: false
         allowUpdates: true
