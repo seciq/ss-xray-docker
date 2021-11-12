@@ -14,7 +14,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Update stable tag
+    - name: Create release (release)      
+      uses: actions/create-release@latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: release
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Create release (stable)
       uses: ncipollo/release-action@v1
       with:
         name: Release ${{ github.ref }}
